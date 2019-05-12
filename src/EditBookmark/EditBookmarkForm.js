@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import config from "../config";
 import BookmarksContext from "../BookmarksContext";
-import { promised } from "q";
+import './EditBookmark.css'
 
 export default class EditBookmarkForm extends Component {
   /* state for inputs etc... */
@@ -61,6 +61,9 @@ export default class EditBookmarkForm extends Component {
   handleChangeRating = e => {
     this.setState({ rating: e.target.value });
   }
+  handleClickCancel = () => {
+    this.props.history.push('/')
+      }
   handleSubmit = e => {
     e.preventDefault()
     const bookmarkId = this.props.match.params.id;
@@ -106,7 +109,7 @@ resetFields = (newFields) => {
     return (
       <section className="EditBookmarkForm">
         <h2>Edit Bookmark</h2>
-        <form className="EditBookmark_Form" onSubmit={this.handleSubmit}>
+        <form className="EditBookmarkForm" onSubmit={this.handleSubmit}>
           <div className="EditBookmark__error" role="alert">
             {this.state.error && <p>{this.state.error.message}</p>}
           </div>
@@ -152,9 +155,14 @@ resetFields = (newFields) => {
             value={rating}
             onChange={this.handleChangeRating}
           />
+          <div classname ='EditBookmarkButtons'>
+          <button type='button' onClick={this.handleClickCancel}>
+              Cancel
+            </button>
           <button type='submit'>
               Save
             </button>
+            </div>
         </form>
 
       </section>
