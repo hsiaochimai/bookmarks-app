@@ -20,8 +20,8 @@ class AddBookmark extends Component {
     const { title, url, description, rating } = e.target
     const bookmark = {
       title: title.value,
-      url: url.value,
-      description: description.value,
+      url_link: url.value,
+      descript: description.value,
       rating: rating.value,
     }
     this.setState({ error: null })

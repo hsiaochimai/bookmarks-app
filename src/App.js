@@ -5,6 +5,7 @@ import BookmarkList from "./BookmarkList/BookmarkList";
 import Nav from "./Nav/Nav";
 import config from "./config";
 import BookmarksContext from'./BookmarksContext'
+import EditBookmarkForm from './EditBookmark/EditBookmarkForm'
 import "./App.css";
 
 class App extends Component {
@@ -51,11 +52,23 @@ class App extends Component {
       .catch(error => this.setState({ error }));
   }
 
+  updateBookmark = updatedBookmark =>{
+    const newBookmarks=this.state.bookmarks.map(bk=>
+     ( bk.id===updatedBookmark.id)
+     ? updatedBookmark 
+     : bk
+  )
+this.setState({
+  bookmarks:newBookmarks
+})
+}
+
   render() {
     const contextValue={
       bookmarks: this.state.bookmarks,
       addBookmark:this.addBookmark,
       deleteBookmark:this.deleteBookmark,
+      updateBookmark: this.updateBookmark
     }
     return (
       <main className="App">
@@ -63,14 +76,17 @@ class App extends Component {
         <BookmarksContext.Provider value={contextValue}>
         <Nav />
         <div className="content" aria-live="polite">
+        <Route
+            exact
+            path="/"
+            component={BookmarkList}
+          />
           <Route
             path="/add-bookmark"
             component={AddBookmark}
           />
-          <Route
-            exact
-            path="/"
-            component={BookmarkList}
+          <Route path= "/edit/bookmark/:id"
+          component={EditBookmarkForm}
           />
         </div>
         </BookmarksContext.Provider>
